@@ -1,0 +1,7 @@
+version: '3.8'
+
+services:
+  web:
+    image: nafanya13371337/ci-docker-project:latest
+    ports:
+      - "8080:8080"

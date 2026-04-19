@@ -1,0 +1,25 @@
+name: CD Kubernetes Deploy
+
+on:
+  workflow_run:
+    workflows: ["CI Docker Pipeline"]
+    types:
+      - completed
+
+jobs:
+  deploy-k8s:
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    runs-on: self-hosted
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Check cluster
+        run: |
+          kubectl get nodes
+
+      - name: Deploy to Kubernetes
+        run: |
+          kubectl apply -f k8s/
+          kubectl rollout status deployment/ci-docker-project --timeout=5m

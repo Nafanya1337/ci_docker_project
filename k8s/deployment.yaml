@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ci-docker-project
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ci-docker-project
+  template:
+    metadata:
+      labels:
+        app: ci-docker-project
+    spec:
+      containers:
+        - name: ci-docker-project
+          image: nafanya13371337/ci-docker-project:latest
+          ports:
+            - containerPort: 8080
